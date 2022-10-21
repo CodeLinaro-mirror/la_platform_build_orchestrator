@@ -78,7 +78,7 @@ def find_file(path, filename):
 # TODO: When orchestrator is in its own git project remove the "build" and "make" here
 class LunchContext(object):
     """Mockable container for lunch"""
-    def __init__(self, workspace_root, orchestrator_path_prefix_components=["build", "build", "make"]):
+    def __init__(self, workspace_root, orchestrator_path_prefix_components=["orchestrator", "build"]):
       self.workspace_root = workspace_root
       self.orchestrator_path_prefix_components = orchestrator_path_prefix_components
 
@@ -186,7 +186,7 @@ def load_config(filename):
         ConfigException on errors
     """
     def load_and_merge(fn, visited):
-        with open(fn) as f:
+        with open(fn, encoding='iso-8859-1') as f:
             try:
                 contents = json.load(f)
             except json.decoder.JSONDecodeError as ex:
