@@ -66,6 +66,10 @@ class MountPt(object):
                  nodev=None,
                  noexec=None):
         assert _kw_only == (), "MountPt only accepts kwargs"
+        # These asserts may need to be revisited if we ever use prefix_src_env
+        # or prefix_dst_env.
+        assert not src or os.path.abspath(src) == src, "Paths must be absolute"
+        assert not dst or os.path.abspath(dst) == dst, "Paths must be absolute"
         self.src = src
         self.prefix_src_env = prefix_src_env
         self.src_content = src_content
@@ -169,8 +173,7 @@ class Nsjail(object):
                     dst="/etc/alternatives",
                     is_bind=True,
                     rw=False,
-                    mandatory=False
-                    ),
+                    mandatory=False),
 
             # TODO: we may need to use something other than tmpfs for this,
             # because of some tests, etc.
